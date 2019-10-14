@@ -5,12 +5,8 @@ class ssh_svn extends NConf_Deployment_Modules
         $this->path = dirname(__FILE__);
     }
     public function command($host_infos){
-		$status = array();
-		foreach($host_infos["host"] as $host){
-			$command = "ssh " . $host["ssh_options"] . " " . $host["username"] . "@" . $host["host"] . " 'sudo /usr/bin/svn update --username " . $host["svnUsername"] . " --password " . $host["svnPassword"] . " --non-interactive --no-auth-cache " . $host["path"] . "'";
-			$status[] = $this->system_call($command, TRUE);
-		}
-		return $status;
+		$command = "ssh " . $host_infos["ssh_options"] . " " . $host_infos["username"] . "@" . $host_infos["host"] . " 'sudo /usr/bin/svn update --username " . $host_infos["svnUsername"] . " --password " . $host_infos["svnPassword"] . " --non-interactive --no-auth-cache " . $host_infos["path"] . "'";
+		$status = $this->system_call($command, TRUE);
     }
 }
 ?>
